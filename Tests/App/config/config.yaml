@@ -1,0 +1,10 @@
+framework:
+    secret:          secret
+    router:
+        resource: "%kernel.project_dir%/Tests/App/config/routing.yaml"
+        strict_requirements: "%kernel.debug%"
+    default_locale:  en
+    session:
+        storage_id: session.storage.native
+        handler_id: ~
+    test:            ~

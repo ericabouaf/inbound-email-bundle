@@ -1,0 +1,30 @@
+{
+    "name": "neyric/inbound-email-bundle",
+    "description": "Inbound emails for Symfony apps with Sendgrid and Mailjet support",
+    "keywords": ["symfony","inbound","email","parse","sendgrid","mailjet"],
+    "homepage": "https://github.com/neyric/sendgrid-inbound-parse-bundle",
+    "type": "symfony-bundle",
+    "require": {
+		"symfony/framework-bundle" : ">=4.3",
+		"symfony/yaml" : ">=4.3",
+        "willdurand/email-reply-parser": "^2.8"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric Abouaf",
+            "email": "eric.abouaf@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "symfony/browser-kit": ">=4.3",
+        "phpunit/phpunit": "*"
+    },
+    "autoload" : {
+		"psr-4" : {
+			"neyric\\InboundEmailBundle\\" : ""
+		},
+        "classmap": [ "Tests/App/AppKernel.php"]
+	}
+}

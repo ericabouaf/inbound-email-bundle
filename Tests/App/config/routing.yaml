@@ -1,0 +1,8 @@
+
+neyric_inbound_email_sendgrid:
+    path: /inbound_email/sendgrid/hook_handler
+    controller: neyric\InboundEmailBundle\Controller\SendgridController::hookHandlerAction
+
+neyric_inbound_email_mailjet:
+    path: /inbound_email/mailjet/hook_handler
+    controller: neyric\InboundEmailBundle\Controller\MailjetController::hookHandlerAction

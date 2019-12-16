@@ -1,0 +1,24 @@
+language: php
+
+dist: trusty
+
+cache:
+    directories:
+        - $HOME/.composer/cache/files
+        - .phpunit
+
+matrix:
+    include:
+        - php: 7.1
+          env: composer_extra="--prefer-lowest --prefer-stable"
+        - php: 7.2
+          env: composer_extra="--prefer-lowest --prefer-stable"
+        - php: 7.3
+          env: composer_extra="--prefer-lowest --prefer-stable"
+    fast_finish: true
+
+install:
+    - composer $composer_extra update
+
+script:
+    - ./vendor/bin/phpunit

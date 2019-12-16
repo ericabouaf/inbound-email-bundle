@@ -1,0 +1,26 @@
+parameters:
+    neyric_inbound_email.visible_text_enabled: true
+
+services:
+
+    neyric\InboundEmailBundle\Controller\AbstractWebhookController:
+        abstract:  true
+        arguments:
+            - "@event_dispatcher"
+            - "@logger"
+            - "%neyric_inbound_email.visible_text_enabled%"
+
+    neyric\InboundEmailBundle\Controller\SendgridController:
+        class: neyric\InboundEmailBundle\Controller\SendgridController
+        parent: neyric\InboundEmailBundle\Controller\AbstractWebhookController
+        tags: ['controller.service_arguments']
+
+    neyric\InboundEmailBundle\Controller\MailjetController:
+        class: neyric\InboundEmailBundle\Controller\MailjetController
+        parent: neyric\InboundEmailBundle\Controller\AbstractWebhookController
+        tags: ['controller.service_arguments']
+
+    neyric\InboundEmailBundle\Event\DefaultInboundEmailSubscriber:
+        class: neyric\InboundEmailBundle\Event\DefaultInboundEmailSubscriber
+        arguments: ['@logger']
+        tags: ['kernel.event_subscriber']
