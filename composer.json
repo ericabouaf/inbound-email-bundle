@@ -2,7 +2,7 @@
     "name": "neyric/inbound-email-bundle",
     "description": "Inbound emails for Symfony apps with Sendgrid and Mailjet support",
     "keywords": ["symfony","inbound","email","parse","sendgrid","mailjet"],
-    "homepage": "https://github.com/neyric/sendgrid-inbound-parse-bundle",
+    "homepage": "https://github.com/neyric/inbound-email-bundle",
     "type": "symfony-bundle",
     "require": {
 		"symfony/framework-bundle" : ">=4.3",
