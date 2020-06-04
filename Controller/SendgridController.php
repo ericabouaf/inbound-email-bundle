@@ -24,8 +24,12 @@ class SendgridController extends AbstractWebhookController
         $subject = $qp['subject'];
         $to = $envelope['to'][0];
         $from = $envelope['from'];
-        $html = $qp['html'];
         $text = $qp['text'];
+        
+        $html = null;
+        if (array_key_exists('html', $qp)) {
+            $html = $qp['html'];
+        }
 
         $event = new InboundEmailEvent($from, $to, $subject, $text, $html);
         $this->dispatch($event);
