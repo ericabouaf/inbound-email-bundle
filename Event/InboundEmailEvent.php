@@ -16,7 +16,7 @@ class InboundEmailEvent extends Event
 
     protected $visibleText;
 
-    public function __construct(string $from, string $to, string $subject, string $text, ?string $html)
+    public function __construct(string $from, string $to, string $subject, ?string $text, ?string $html)
     {
         $this->from = $from;
         $this->to = $to;

@@ -90,4 +90,43 @@ class SendgridControllerTest extends WebTestCase
         $this->assertEquals("with content for InboundEmailBundle !!\n\nCool :)", $event->getVisibleText());
     }
 
+    public function testHookHandlerActionWithoutTextPart()
+    {
+        $sendgridPayload = [
+            "headers" => "Received: by mx0054p1mdw1.sendgrid.net with ...",
+            "dkim" => "{@somedomain-com.20150623.gappssmtp.com : pass}",
+            "to" => "Some Recipient <somerecipient@sendgrid.com>",
+            "html" => "<p>a paragraph</p><div dir=\"ltr\">with content for InboundEmailBundle !!<br clear=\"all\"><div><br></div><div>Cool :)</div><div><br></div>\n",
+            "from" => "Some Sender <sender@sendgrid.com>",
+            "sender_ip" => "127.0.0.1",
+            "envelope" => "{\"to\":[\"somerecipient@sendgrid.com\"],\"from\":\"sender@sendgrid.com\"}",
+            "attachments" => "0",
+            "subject" => "A test for InboundEmailBundle",
+            "charsets" => "{\"to\":\"UTF-8\",\"html\":\"UTF-8\",\"subject\":\"UTF-8\",\"from\":\"UTF-8\",\"text\":\"UTF-8\"}",
+            "SPF" => "pass",
+        ];
+
+        $client = static::createClient();
+
+        // Access the kernel container (booted from createClient)
+        $container = static::$kernel->getContainer();
+
+        // Subscribe a test listener
+        $dispatcher = $container->get('event_dispatcher');
+        $listener = new TestInboundEmailListener();
+        $dispatcher->addListener(InboundEmailEvent::class, [$listener, 'onInboundEmail']);
+
+        $crawler = $client->request('POST', '/inbound_email/sendgrid/hook_handler', $sendgridPayload);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertTrue($listener->onInboundEmailInvoked);
+
+        $event = $listener->event;
+        $this->assertEquals('sender@sendgrid.com', $event->getFrom());
+        $this->assertEquals("A test for InboundEmailBundle", $event->getSubject());
+
+        // Test the visibleText EmailReplyParser
+        $this->assertEquals("a paragraph\nwith content for InboundEmailBundle !!\n\nCool :)", $event->getVisibleText());
+    }
+
 }

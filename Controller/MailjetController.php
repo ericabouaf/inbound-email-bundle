@@ -24,8 +24,16 @@ class MailjetController extends AbstractWebhookController
         $subject = $qp['Subject'];
         $to = $qp['Recipient'];
         $from = $qp['Sender'];
-        $html = $qp['Html-part'];
-        $text = $qp['Text-part'];
+
+        $text = null;
+        if (array_key_exists('Text-part', $qp)) {
+            $text = $qp['Text-part'];
+        }
+        
+        $html = null;
+        if (array_key_exists('Html-part', $qp)) {
+            $html = $qp['Html-part'];
+        }
 
         $event = new InboundEmailEvent($from, $to, $subject, $text, $html);
         $this->dispatch($event);
