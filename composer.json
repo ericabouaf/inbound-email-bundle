@@ -5,8 +5,8 @@
     "homepage": "https://github.com/neyric/inbound-email-bundle",
     "type": "symfony-bundle",
     "require": {
-		"symfony/framework-bundle" : ">=4.3",
-		"symfony/yaml" : ">=4.3",
+		"symfony/framework-bundle" : "^4.3 || ^5.0",
+		"symfony/yaml" : "^4.3 || ^5.0",
         "willdurand/email-reply-parser": "^2.8"
     },
     "license": "MIT",
