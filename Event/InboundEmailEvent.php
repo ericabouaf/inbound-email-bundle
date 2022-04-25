@@ -7,22 +7,24 @@ use Symfony\Contracts\EventDispatcher\Event;
 class InboundEmailEvent extends Event
 {
     public const NAME = 'inbound.email';
-    
+
     protected $from;
     protected $to;
     protected $subject;
     protected $html;
     protected $text;
+    protected $attachments = null;
 
     protected $visibleText;
 
-    public function __construct(string $from, string $to, string $subject, ?string $text, ?string $html)
+    public function __construct(string $from, string $to, string $subject, ?string $text, ?string $html, ?array $attachments)
     {
         $this->from = $from;
         $this->to = $to;
         $this->subject = $subject;
         $this->text = $text;
         $this->html = $html;
+        $this->attachments = $attachments;
     }
 
     public function getFrom(): string
@@ -34,7 +36,7 @@ class InboundEmailEvent extends Event
     {
         return $this->to;
     }
-    
+
     public function getSubject(): string
     {
         return $this->subject;
@@ -44,7 +46,7 @@ class InboundEmailEvent extends Event
     {
         return $this->text;
     }
-    
+
     public function getVisibleText(): string
     {
         return $this->visibleText;
@@ -60,6 +62,16 @@ class InboundEmailEvent extends Event
         return $this->html;
     }
 
+    public function getAttachments(): ?array
+    {
+        return $this->attachments;
+    }
+
+    public function setAttachments(?array $attachments): void
+    {
+        $this->attachments = $attachments;
+    }
+
     public function toArray(): array
     {
         return [
@@ -69,6 +81,7 @@ class InboundEmailEvent extends Event
             'html' => $this->getHtml(),
             'text' => $this->getText(),
             'visibleText' => $this->getVisibleText(),
+            'attachments' => $this->getAttachments(),
         ];
     }
 
