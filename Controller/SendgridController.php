@@ -27,11 +27,13 @@ class SendgridController extends AbstractWebhookController
         $to = $envelope['to'][0];
         $from = $envelope['from'];
 
+        $attachments = $request->files->all();
+
         $text = null;
         if (array_key_exists('text', $qp)) {
             $text = $qp['text'];
         }
-        
+
         $html = null;
         if (array_key_exists('html', $qp)) {
             $html = $qp['html'];
@@ -64,7 +66,7 @@ class SendgridController extends AbstractWebhookController
         }
 
 
-        $event = new InboundEmailEvent($from, $to, $subject, $text, $html);
+        $event = new InboundEmailEvent($from, $to, $subject, $text, $html, $attachments);
         $this->dispatch($event);
 
         return JsonResponse::create([ 'success' => true ]);
